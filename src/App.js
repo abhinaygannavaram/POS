@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
 
-function App() {
+import NavBar from "./components/NavBar";
+
+import Container from "@material-ui/core/Container";
+
+const App = (props) => {
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  const [showBill, setShowBill] = useState(false);
+
+  const handleAuth = () => {
+    setUserLoggedIn(!userLoggedIn);
+  };
+
+  const handleShowBill = () => {
+    setShowBill(!showBill);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      handleAuth();
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container component="main">
+      <div>
+        <h2 style={{ textAlign: "center", color: "teal" }}>Billing App</h2>
+
+        <NavBar
+          userLoggedIn={userLoggedIn}
+          handleAuth={handleAuth}
+          showBill={showBill}
+          handleShowBill={handleShowBill}
+        />
+      </div>
+    </Container>
   );
-}
+};
 
 export default App;
